@@ -41,7 +41,7 @@ exports.createCart = (req, res) => {
 // Listar productos en un carrito por ID
 exports.getCartById = (req, res) => {
     const carts = readCartsFromFile();
-    const cart = carts.find(c => c.id === req.params.cid);
+    const cart = carts.find(c => c.id === parseInt(req.params.cid));
     if (cart) {
         res.json(cart.products);
     } else {
@@ -53,16 +53,23 @@ exports.getCartById = (req, res) => {
 exports.addProductToCart = (req, res) => {
     const carts = readCartsFromFile();
     const products = readProductsFromFile();
-    const cart = carts.find(c => c.id === req.params.cid);
-    const product = products.find(p => p.id === req.params.pid);
+    const cart = carts.find(c => c.id === parseInt(req.params.cid));
+    const product = products.find(p => p.id === parseInt(req.params.cid));
+    const quantityToAdd = parseInt(req.body.quantity); // Parsea la cantidad ingresada a entero
+
+    if (!quantityToAdd || isNaN(quantityToAdd)) {
+        return res.status(400).json({ message: 'La cantidad ingresada no es válida' });
+    }
 
     if (cart && product) {
-        const productInCart = cart.products.find(p => p.product === req.params.pid);
+        let productInCart = cart.products.find(p => p.product === req.params.pid);
+
         if (productInCart) {
-            productInCart.quantity += 1;
+            productInCart.quantity += quantityToAdd; // Suma la cantidad ingresada al producto existente en el carrito
         } else {
-            cart.products.push({ product: req.params.pid, quantity: 1 });
+            cart.products.push({ product: req.params.pid, quantity: quantityToAdd }); // Agrega el producto al carrito con la cantidad ingresada
         }
+
         writeCartsToFile(carts);
         res.json(cart);
     } else {

@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "title": "Producto Actualizado",
+    "description": "Nueva descripción del producto",
+    "code": "PRD001",
+    "price": 100,
+    "status": true,
+    "stock": 100,
+    "category": "Electrónicos"
+  },
+  {
+    "id": 2,
+    "title": "Producto de Ejemplo 2",
+    "description": "Descripción del Producto 2",
+    "code": "PRD002",
+    "price": 149.99,
+    "status": true,
+    "stock": 50,
+    "category": "Ropa"
+  },
+  {
+    "id": 3,
+    "title": "Producto 3 updateado",
+    "description": "Descripción del producto de prueba",
+    "code": "PRD001",
+    "price": 100,
+    "status": true,
+    "stock": 50,
+    "category": "Categoría de prueba",
+    "thumbnails": [
+      "ruta/imagen1.jpg",
+      "ruta/imagen2.jpg"
+    ]
+  }
+]

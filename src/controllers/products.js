@@ -25,7 +25,7 @@ exports.getAllProducts = (req, res) => {
 // Obtener un producto por ID
 exports.getProductById = (req, res) => {
     const products = readProductsFromFile();
-    const product = products.find(p => p.id === req.params.pid);
+    const product = products.find(p => p.id === parseInt(req.params.pid));
     if (product) {
         res.json(product);
     } else {
@@ -49,7 +49,7 @@ exports.addProduct = (req, res) => {
 // Actualizar un producto por ID
 exports.updateProduct = (req, res) => {
     const products = readProductsFromFile();
-    const productIndex = products.findIndex(p => p.id === req.params.pid);
+    const productIndex = products.findIndex(p => p.id === parseInt(req.params.pid));
     if (productIndex !== -1) {
         const updatedProduct = {
             ...products[productIndex],
@@ -67,7 +67,7 @@ exports.updateProduct = (req, res) => {
 // Eliminar un producto por ID
 exports.deleteProduct = (req, res) => {
     const products = readProductsFromFile();
-    const newProducts = products.filter(p => p.id !== req.params.pid);
+    const newProducts = products.filter(p => p.id !== parseInt(req.params.pid));
     if (newProducts.length !== products.length) {
         writeProductsToFile(newProducts);
         res.status(204).end();
